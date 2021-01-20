@@ -2,6 +2,7 @@ from fastapi import FastAPI, Depends
 from . import config
 from .database import database, engine, metadata
 
+metadata.create_all(engine)
 app = FastAPI()
 
 
