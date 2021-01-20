@@ -1,9 +1,9 @@
 from fastapi import FastAPI, Depends
-from .database import database, engine, metadata
 from . import config
-
+from .database import database, engine, metadata
 
 app = FastAPI()
+
 
 @app.on_event('startup')
 async def startup():
@@ -19,5 +19,5 @@ async def shutdown():
 async def index(conf: config.Settings = Depends(config.get_settings)):
     return {
         'secret': conf.secret_key,
-        'ps': 'don\'t tell anyone'
+        'ps': 'don\'t tell anyone',
     }
