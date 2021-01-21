@@ -1,6 +1,7 @@
-from database import metadata
+from .database import metadata
 import sqlalchemy as sa
-from datetime import Date
+import datetime
+
 
 accounts = sa.Table(
     'accounts', metadata,
@@ -13,6 +14,6 @@ lines = sa.Table(
     sa.Column('id', sa.Integer, primary_key=True),
     sa.Column('value', sa.Float, nullable=False),
     sa.Column('credit', sa.Boolean, default=False, nullable=False),
-    sa.Column('timest', sa.Date, default=Date.today(), nullable=False),
+    sa.Column('transaction_date', sa.Date, default=datetime.date.today(), nullable=False),
     sa.Column('account_id', sa.Integer, sa.ForeignKey('accounts.id'), nullable=False),
 )
