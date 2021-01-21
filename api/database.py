@@ -2,9 +2,15 @@ import databases
 import sqlalchemy as sa
 from .config import get_settings
 
-db = get_settings().database_uri
-database = databases.Database(db)
+uri = get_settings().database_uri
 
 metadata = sa.MetaData()
+engine = sa.create_engine(uri)
 
-engine = sa.create_engine(get_settings().database_uri)
+async def get_db():
+    db = databases.Database(uri)
+    await db.connect()
+    try:
+        yield db
+    finally:
+        await db.disconnect()

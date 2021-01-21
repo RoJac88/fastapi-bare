@@ -1,6 +1,6 @@
 __pycache__
 venv
 *.db
-.env
+*.env
 .pytest_cache
 tools.py

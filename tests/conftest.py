@@ -1,11 +1,13 @@
-import sqlalchemy as sa
 import pytest
-from api.database import metadata
-from api.config import get_settings
+import os
+from api.config import Settings
+from api import models
+from api.database import metadata, engine
 
-@pytest.fixture(scope='session', autouse=True)
-def setup_database():
-    engine = sa.create_engine(get_settings().test_db_uri)
+settings = Settings(_env_file='test.env')
+
+@pytest.fixture(autouse=True)
+def db_setup():
     metadata.create_all(engine)
     yield
     metadata.drop_all(engine)
