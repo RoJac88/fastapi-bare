@@ -14,8 +14,32 @@ async def test_index():
     assert response.status_code == 200
     assert response.json() == {
         'secret': 'shhhhh',
-        'ps': 'don\'t tell anyone'
+        'ps': 'don\'t tell anyone',
     }
+
+
+@pytest.mark.asyncio
+async def test_create_account():
+    async with AsyncClient(app=app, base_url='http://127.0.0.1/') as client:
+        response = await client.post('/account/', json={'name': 'bobby'})
+    assert response.status_code == 200
+    assert response.json() == {
+        'uid': 1,
+        'name': 'bobby',
+    }
+
+
+@pytest.mark.asyncio
+async def test_read_accont():
+    async with AsyncClient(app=app, base_url='http://127.0.0.1/') as client:
+        await client.post('/account/', json={'name': 'fischer'})
+        response = await client.get('/account/1/')
+    assert response.status_code == 200
+    assert response.json() == {
+        'uid': 1,
+        'name': 'fischer',
+    }
+
 
 
 @pytest.mark.asyncio
@@ -44,6 +68,6 @@ async def test_create_spending(database=Depends(get_db)):
         'credit': False, 
         'account': {
             'uid': 1,
-            'name': 'user'
+            'name': 'user',
         }
     }
