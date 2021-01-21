@@ -1,9 +1,7 @@
 import pytest
-import os
 from fastapi import Depends
 from httpx import AsyncClient
 from api.database import get_db
-from api.config import get_settings
 from api.main import app
 
 
@@ -39,7 +37,6 @@ async def test_read_accont():
         'uid': 1,
         'name': 'fischer',
     }
-
 
 
 @pytest.mark.asyncio

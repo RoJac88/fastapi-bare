@@ -1,5 +1,4 @@
 import pytest
-import os
 from api import models
 from api.database import metadata, engine
 
